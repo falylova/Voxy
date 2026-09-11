@@ -1,1 +1,14 @@
+
+# Environment variables
 backend/.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+
+# Node
+node_modules/
