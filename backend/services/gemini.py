@@ -139,7 +139,7 @@ reading it aloud to a student. Respond in the same language as the document.
 Rules:
 - Plain text only. No markdown, no headers, no bullet points, no numbering.
 - Never reference images, figures, diagrams, charts, or tables — describe concepts in words only.
-- 4 to 15 short sentences. Simple vocabulary. No filler like "in this section".
+- 4 to 8 short sentences. Simple vocabulary. No filler like "in this section".
 - Base it strictly on the document content below.
 
 SECTION TITLE: {section_title}
@@ -160,6 +160,9 @@ _MODE_INSTRUCTIONS = {
         "question using ONLY the document. Keep your answer concise and clear. If the "
         "answer isn't covered by the document, say so honestly rather than inventing facts, "
         "and offer your best related help instead."
+        "- 4 to 8 short sentences. Simple vocabulary. No filler like in this section"
+        "dont add emoji or asterix or something similar"
+
     ),
     "interview": (
         "You are VOXY, conducting a friendly practice interview based only on the content "
