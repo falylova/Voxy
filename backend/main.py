@@ -54,6 +54,13 @@ def _get_document_or_404(doc_id: str) -> dict:
     return doc
 
 
+@app.get("/")
+async def health_check():
+    """Repond 200 sur '/' pour les health checks Render (evite un 404 qui pourrait
+    faire passer l'instance pour 'unhealthy' et declencher un redemarrage)."""
+    return {"status": "ok"}
+
+
 @app.post("/api/analyze-pdf")
 async def analyze_pdf(file: UploadFile = File(...)):
     """
