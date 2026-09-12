@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 # Doit etre charge AVANT d'importer les services (gemini.py lit la cle API a l'import).
 load_dotenv()
 
+import asyncio
 import os
 import uuid
 from typing import Optional
@@ -58,7 +59,11 @@ async def analyze_pdf(file: UploadFile = File(...)):
     (voir /api/overview, /api/quiz, /api/sections), et mis en cache ensuite.
     """
     try:
-        pdf_text, page_count = extract_text_from_pdf(file)
+        pdf_text, page_count = await asyncio.wait_for(
+            asyncio.to_thread(extract_text_from_pdf, file), timeout=20
+        )
+    except asyncio.TimeoutError:
+        raise HTTPException(status_code=504, detail="Ce PDF prend trop de temps a analyser. Reessaie avec un autre fichier.")
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as exc:
