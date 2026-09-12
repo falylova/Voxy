@@ -26,6 +26,10 @@ from services.tts import generate_speech
 
 app = FastAPI(title="VOXY AI Backend")
 
+# Limite de taille pour la demo : l'instance Render (512 Mo de RAM) peut planter
+# (OOM, redemarrage silencieux) sur de gros PDF, surtout avec des images.
+MAX_PDF_SIZE_BYTES = 8 * 1024 * 1024  # 8 Mo
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -58,6 +62,18 @@ async def analyze_pdf(file: UploadFile = File(...)):
     par Gemini qu'a la demande, quand l'utilisateur ouvre l'onglet correspondant
     (voir /api/overview, /api/quiz, /api/sections), et mis en cache ensuite.
     """
+    file_size = file.size
+    if file_size is None:
+        file.file.seek(0, os.SEEK_END)
+        file_size = file.file.tell()
+        file.file.seek(0)
+
+    if file_size > MAX_PDF_SIZE_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Ce PDF est trop volumineux pour la demo (limite : {MAX_PDF_SIZE_BYTES // (1024 * 1024)} Mo).",
+        )
+
     try:
         pdf_text, page_count = await asyncio.wait_for(
             asyncio.to_thread(extract_text_from_pdf, file), timeout=20
