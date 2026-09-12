@@ -72,10 +72,18 @@ Return ONLY a valid JSON object with EXACTLY this shape (no markdown, no comment
 }}
 
 Content rules:
-- Each of "easy", "medium" and "hard" must contain exactly 5 questions, each with exactly 4 options.
-- "answer" is the zero-based index of the correct option in "options".
-- Do not ask question about the bibliography just the content
-- Base everything strictly on the document content below. Do not invent facts that aren't supported by it.
+- Each of "easy", "medium", and "hard" must contain exactly 5 questions.
+- Each question must have exactly 4 options.
+- "answer" must be the zero-based index of the correct option in "options".
+- Do not ask questions about the bibliography, references, authors, page numbers, chapter numbers, section numbers, headings, parts of the book, or the structure/organization of the document.
+- Do not ask questions such as "How many chapters are there?", "Which chapter discusses...?", "In which part of the book...?", or any other question about where information appears in the document.
+- All questions must focus on the actual content of the document: its concepts, ideas, arguments, explanations, facts, examples, relationships, and conclusions.
+- Questions should test understanding of the subject matter in general, rather than the document's structure or metadata.
+- Base everything strictly on the document content provided. Do not invent, infer, or add facts that are not supported by the document.
+- Every correct answer must be directly supported by the document.
+- The difficulty levels ("easy", "medium", and "hard") should reflect the complexity of understanding required, while all questions remain strictly based on the document's content.
+
+
 
 DOCUMENT EXCERPT:
 \"\"\"
@@ -154,11 +162,30 @@ _MODE_INSTRUCTIONS = {
         "and offer your best related help instead."
     ),
     "interview": (
-        "You are VOXY, conducting a friendly practice interview with the student about the "
-        "document. Ask ONE focused question at a time to check their understanding. After "
-        "they answer, briefly react (a sentence or less) and then ask the next question. "
-        "Never ask more than one question per turn. Keep it conversational and encouraging."
+        "You are VOXY, conducting a friendly practice interview based only on the content "
+        "of the provided document. Ask ONE focused question at a time. "
+        "Each question must test the student's understanding of a concept, idea, method, "
+        "process, explanation, or important detail that is actually contained in the document. "
+        "Questions should sound like realistic interview questions that could commonly be "
+        "asked about the subject matter, not questions about the document itself. "
+        "Never ask about the title, author, publication date, bibliography, references, "
+        "source, chapter number, section name, or the book/document in general. "
+        "Do not mention the document or book in your questions. "
+        "Do not ask questions such as 'Who is the author?', 'What is the title?', "
+        "'When was it published?', or 'What is this book about?'. "
+        "Instead, ask random but relevant questions about the actual subject matter and "
+        "content covered in the document. "
+        "Never reference images, figures, diagrams, charts, or tables. Describe concepts "
+        "using words only. "
+        "After the student answers, briefly react in one sentence or less, then ask the "
+        "next question. Never ask more than one question per turn. "
+        "Keep the conversation natural, friendly, encouraging, and concise. "
+        "Use simple vocabulary. Avoid filler expressions such as 'in this section', "
+        "'in this chapter', 'according to the book', or 'according to the document'."
+        "Never ask more than one question per turn. After roughly 5 questions, give a final "
+        "grade out of 20 with one short sentence of feedback, and stop asking new questions."
     ),
+
     "exam": (
         "You are VOXY, acting as a strict but fair oral examiner testing the student on the "
         "document. Ask ONE exam-style question at a time. After their answer, briefly say "

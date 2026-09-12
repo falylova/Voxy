@@ -7,7 +7,7 @@ import { cn } from "../utils/cn";
 
 type Phase = "idle" | "listening" | "thinking" | "speaking";
 
-const SILENCE_TIMEOUT_MS = 15000;
+const SILENCE_TIMEOUT_MS = 3000;
 const WAVE_BARS = 28;
 const GREETING = "Tap the microphone and start talking about your document.";
 
@@ -242,15 +242,15 @@ export default function OralPractice({ docId }: { docId: string }) {
           <Mic className="h-5 w-5" />
         </div>
         <div>
-          <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Oral Practice</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="m-3 text-xl font-extrabold tracking-tight text-slate-900">Oral Practice</h1>
+          <p className="m-3 text-sm text-slate-500">
             Talk to VOXY about your document. Pause for a moment and it will answer.
           </p>
         </div>
       </div>
 
       {/* Mode selector */}
-      <div className="mt-5 grid grid-cols-3 gap-2">
+      <div className="my-8 grid grid-cols-3 gap-6">
         {MODES.map((m) => {
           const Icon = m.icon;
           const active = mode === m.id;
@@ -276,7 +276,7 @@ export default function OralPractice({ docId }: { docId: string }) {
         {MODES.find((m) => m.id === mode)?.hint}
       </p>
 
-      <div className="relative mt-5 overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 p-8 text-center shadow-lg">
+      <div className="relative mt-10 overflow-hidden rounded-3xl bg-gradient-to-t from-slate-900 via-indigo-950 to-slate-900 p-8 text-center shadow-lg">
         {phase !== "idle" && (
           <button
             onClick={endSession}
