@@ -57,7 +57,13 @@ async def analyze_pdf(file: UploadFile = File(...)):
     par Gemini qu'a la demande, quand l'utilisateur ouvre l'onglet correspondant
     (voir /api/overview, /api/quiz, /api/sections), et mis en cache ensuite.
     """
-    pdf_text, page_count = extract_text_from_pdf(file)
+    try:
+        pdf_text, page_count = extract_text_from_pdf(file)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture du PDF : {exc}")
+
     if not pdf_text.strip():
         raise HTTPException(status_code=400, detail="Le fichier PDF est vide ou n'a pas pu etre lu.")
 
