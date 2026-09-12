@@ -62,7 +62,7 @@ async def analyze_pdf(file: UploadFile = File(...)):
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture du PDF : {exc}")
+        raise HTTPException(status_code=500, detail=f"Echec de la lecture du PDF : {exc}")
 
     if not pdf_text.strip():
         raise HTTPException(status_code=400, detail="Le fichier PDF est vide ou n'a pas pu etre lu.")

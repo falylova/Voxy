@@ -17,9 +17,7 @@ def extract_text_from_pdf(file: UploadFile) -> tuple[str, int]:
         try:
             text = page.extract_text()
         except Exception:
-            # On saute la page problematique plutot que de faire planter
-            # toute l'extraction (police non standard, contenu corrompu, etc.)
-            continue
+            continue  # page corrompue, on passe a la suivante
         if text:
             extracted_text += text + "\n"
     return extracted_text, len(reader.pages)
